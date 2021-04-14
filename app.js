@@ -21,7 +21,7 @@ function BusMall(name, image, timesShown) {
     this.votes = 0;
     BusMall.allProducts.push(this);
 }
-BusMall.timesShown = 0;
+// BusMall.timesShown = 0;
 BusMall.allProducts = [];
 
 
@@ -75,7 +75,7 @@ function renderThreeImages() {
     }
 
 
-    
+
     // for (let x = 0; x < BusMall.allProducts.length; x++){
     //     if (middleImageIndex == BusMall.allProducts[x].image);
     //     BusMall.allProducts[x].timesShown++;
@@ -88,16 +88,24 @@ function renderThreeImages() {
     console.log(BusMall.allProducts[leftImageIndex].image);
 
     leftImage.src = BusMall.allProducts[leftImageIndex].image;
+    BusMall.allProducts[leftImageIndex].timesShown++;
+
     middleImage.src = BusMall.allProducts[middleImageIndex].image;
+    BusMall.allProducts[middleImageIndex].timesShown++;
+
     rightIMAGE.src = BusMall.allProducts[rightIMAGEiNDEX].image;
+    BusMall.allProducts[rightIMAGEiNDEX].timesShown++;
 
 
-    for (let i = 0; i < BusMall.allProducts.length; i++){
-        if (leftImage === BusMall.allProducts[i].image) {
-            BusMall.allProducts[i].timesShown++;
-            console.log(BusMall.allProducts[i]);
-        }
-    }
+
+
+    // for (let i = 0; i < BusMall.allProducts.length; i++){
+    //     if (leftImage === BusMall.allProducts[i]) {
+    //         console.log("hihihihih");
+    //         // BusMall.allProducts[i].timesShown++;
+    //         // console.log(BusMall.allProducts[i]);
+    //     }
+    // }
 
     // for (let i = 0; i < 10; i++){
     //     if (leftImageIndex.src == BusMall.allProducts[i].image)
@@ -107,7 +115,7 @@ function renderThreeImages() {
 
     // }
     // while(leftImageIndex== BusMall.allProducts[0]){}
-    
+
 
 
 
@@ -146,15 +154,32 @@ function handleclick(event) {
             BusMall.allProducts[middleImageIndex].votes++;
 
         }
-    }
-    else if (event.target.id === 'rightImage') {
+         }
+         else if (event.target.id === 'rightImage') {
         BusMall.allProducts[rightIMAGEiNDEX].votes++;
+
+         }
+        else {
+        leftImage.removeEventListener('click', handleclick);
+        rightIMAGE.removeEventListener('click', handleclick);
+        middleImage.removeEventListener('click', handleclick);
+
+        let ulElement = document.getElementById('ulId');
+        let resul;
+
+        for (let i = 0; i < BusMall.allProducts.length; i++){
+            let liElement = document.createElement('li');
+            ulElement.appendChild(liElement);
+            liElement.textContent = `name: ${BusMall.allProducts[i].name} votes:${BusMall.allProducts[i].votes} tomeshown:${BusMall.allProducts[i].timesShown}  `;
+
+        }
+
 
     }
     console.log(BusMall.allProducts);
+    console.log(userAttemptsCounter);
 
 }
-
 
 
 
