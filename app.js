@@ -24,10 +24,38 @@ function BusMall(name, image, timesShown) {
     this.votes = 0;
     BusMall.allProducts.push(this);
     names.push(this.name);
+
+    updatestorage();
 }
+
+let stringshown = [];
+function updatestorage() {
+    let stringNames = JSON.stringify(names);
+
+    
+    for (let i = 0; i < BusMall.allProducts.length; i++){
+         stringshown = JSON.stringify(BusMall.allProducts[i].timesShown);
+
+            console.log(stringshown);
+
+    }
+
+    let stringvotes = JSON.stringify(sumVotes);
+
+    // localStorage.setItem('name:',stringNames);
+    // localStorage.setItem('votes:',stringvotes);
+    // // localStorage.setItem('time shown:',stringshown);
+
+
+
+
+}
+
+
+
+
 // BusMall.timesShown = 0;
 BusMall.allProducts = [];
-
 
 // let container = document.getElementById('container');
 // declaring images
