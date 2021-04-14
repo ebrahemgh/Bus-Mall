@@ -6,14 +6,16 @@ let middleImage = document.getElementById('middleImage');
 let rightIMAGE = document.getElementById('rightImage');
 let container = document.getElementById('container');
 
-let maxAttemts = 10;
+let maxAttemts = 25;
 let userAttemptsCounter = 0;
 
 let leftImageIndex;
 let middleImageIndex;
 let rightIMAGEiNDEX;
 // bus mall
-
+let names = [];
+let sumVotes = [];
+let sumTimeShown = [];
 function BusMall(name, image, timesShown) {
 
     this.name = name;
@@ -21,6 +23,7 @@ function BusMall(name, image, timesShown) {
     this.timesShown = 0;
     this.votes = 0;
     BusMall.allProducts.push(this);
+    names.push(this.name);
 }
 // BusMall.timesShown = 0;
 BusMall.allProducts = [];
@@ -57,7 +60,7 @@ function generateRandomIndex() {
 // console.log(generateRandomIndex());
 
 
-
+let pictures = [];
 // render 
 function renderThreeImages() {
 
@@ -66,14 +69,16 @@ function renderThreeImages() {
     middleImageIndex = generateRandomIndex();
     rightIMAGEiNDEX = generateRandomIndex();
 
+
     // make sure there is no same pics
-    while (leftImageIndex == middleImageIndex || leftImageIndex == rightIMAGEiNDEX) {
+    while (leftImageIndex == middleImageIndex || leftImageIndex == rightIMAGEiNDEX || middleImageIndex === rightIMAGEiNDEX || pictures.includes(leftImageIndex) || pictures.includes(middleImageIndex) || pictures.includes(rightIMAGEiNDEX)) {
+        leftImageIndex = generateRandomIndex();
         middleImageIndex = generateRandomIndex();
         rightIMAGEiNDEX = generateRandomIndex();
     }
-    while (middleImageIndex === rightIMAGEiNDEX) {
-        rightIMAGEiNDEX = generateRandomIndex();
-    }
+    pictures = [leftImageIndex, middleImageIndex, rightIMAGEiNDEX];
+
+  
 
 
 
@@ -174,8 +179,13 @@ function handleclick(event) {
         button.addEventListener('click', showing);
 
         // showing();
+        for (let i = 0; i < BusMall.allProducts.length; i++) {
+            sumVotes.push(BusMall.allProducts[i].votes);
+            sumTimeShown.push(BusMall.allProducts[i].timesShown);
 
-
+            
+          }
+        chart();
 
     }
     console.log(BusMall.allProducts);
@@ -199,5 +209,48 @@ function showing() {
 
     }
 }
+
+// chart
+
+function chart() {
+    let ctx = document.getElementById('myChart').getContext('2d');
+    
+    let chart= new Chart(ctx,{
+     type: 'bar',
+       data:{
+      
+        labels: names,
+        
+        datasets: [
+          {
+          label: 'product votes',
+          data: sumVotes,
+          backgroundColor: [
+            'rgb(251, 93, 76)',
+          ],
+    
+          borderWidth: 1
+        },
+  
+        {
+          label: 'time shown',
+          data: sumTimeShown,
+          backgroundColor: [
+            'black',
+          ],
+    
+          borderWidth: 1
+        }
+        
+      ]
+      },
+      options: {}
+    });
+    
+  }
+
+    
+
+    
 
 
