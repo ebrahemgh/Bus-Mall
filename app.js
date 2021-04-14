@@ -4,6 +4,7 @@
 let leftImage = document.getElementById('leftImage');
 let middleImage = document.getElementById('middleImage');
 let rightIMAGE = document.getElementById('rightImage');
+let container = document.getElementById('container');
 
 let maxAttemts = 10;
 let userAttemptsCounter = 0;
@@ -25,7 +26,7 @@ function BusMall(name, image, timesShown) {
 BusMall.allProducts = [];
 
 
-let container = document.getElementById('container');
+// let container = document.getElementById('container');
 // declaring images
 new BusMall('bag', 'images/bag.jpg');//1
 new BusMall('banana', 'images/banana.jpg');//2
@@ -138,12 +139,15 @@ middleImage.addEventListener('click', handleclick);
 rightIMAGE.addEventListener('click', handleclick);
 // container.addEventListener('click', handleclick);
 
+
+
 function handleclick(event) {
     // console.log(event.target.id);
 
     userAttemptsCounter++;
 
     renderThreeImages();
+
 
 
     if (userAttemptsCounter < maxAttemts) {
@@ -154,36 +158,46 @@ function handleclick(event) {
             BusMall.allProducts[middleImageIndex].votes++;
 
         }
-         }
-         else if (event.target.id === 'rightImage') {
+    }
+    else if (event.target.id === 'rightImage') {
         BusMall.allProducts[rightIMAGEiNDEX].votes++;
 
-         }
-        else {
+    }
+    else {
         leftImage.removeEventListener('click', handleclick);
         rightIMAGE.removeEventListener('click', handleclick);
         middleImage.removeEventListener('click', handleclick);
 
-        let ulElement = document.getElementById('ulId');
-        let resul;
+        let button = document.createElement('button');
+        container.appendChild(button);
+        button.innerHTML = ('show result');
+        button.addEventListener('click', showing);
 
-        for (let i = 0; i < BusMall.allProducts.length; i++){
-            let liElement = document.createElement('li');
-            ulElement.appendChild(liElement);
-            liElement.textContent = `name: ${BusMall.allProducts[i].name} votes:${BusMall.allProducts[i].votes} tomeshown:${BusMall.allProducts[i].timesShown}  `;
+        // showing();
 
-        }
 
 
     }
     console.log(BusMall.allProducts);
     console.log(userAttemptsCounter);
 
+
 }
 
 
 
 // handleclick(Event);
+function showing() {
+    let ulElement = document.getElementById('ulId');
+    let resul;
+    for (let i = 0; i < BusMall.allProducts.length; i++) {
+        let liElement = document.createElement('li');
+        ulElement.appendChild(liElement);
+        liElement.textContent = `name: ${BusMall.allProducts[i].name} votes:${BusMall.allProducts[i].votes} tomeshown:${BusMall.allProducts[i].timesShown}  `;
+        resul = liElement;
 
+
+    }
+}
 
 
